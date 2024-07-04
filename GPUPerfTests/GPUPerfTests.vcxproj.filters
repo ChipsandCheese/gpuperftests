@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\tests">
+      <UniqueIdentifier>{6e60fc66-2c8e-4279-a5c5-433c64594aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tests">
+      <UniqueIdentifier>{e42f261b-e136-40f8-82c8-6628fe4602ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{a3ffdb50-6272-4f39-99b6-8c02f5642395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui">
+      <UniqueIdentifier>{7a37a989-7a0a-48df-8f21-1beeafb8a988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui">
+      <UniqueIdentifier>{96ae6c3a-d660-484b-9032-4437bd7f5c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\backends">
+      <UniqueIdentifier>{003ae0e3-06d4-4ab4-b742-9b659c7c4f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lang">
+      <UniqueIdentifier>{b093eb15-42ad-46b8-8101-f7b69bc60340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="embedded_resources">
+      <UniqueIdentifier>{0df8028b-757f-4d6e-bf38-db5f255bdc2d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\runner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logger.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_info.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_bandwidth.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_runner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_shader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_compute_pipeline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_command_buffer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_staging.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\buffer_filler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_latency.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan_texture.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_rate.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\process_runner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\gui.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\gui_benchmarks.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_list.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\test_vk_uplink.c">
+      <Filter>Source Files\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\latency_helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\backends\imgui_impl_glfw.cpp">
+      <Filter>Source Files\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_freetype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\gui_localization.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libspng-0.7.2\src\spng.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\gui_formatter.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\windows_helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_info.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_bandwidth.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_compute_pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_command_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_staging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\buffer_filler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sanitize_windows_h.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_latency.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vulkan_texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_rate.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\process_runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\gui.h">
+      <Filter>Header Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\gui_benchmarks.h">
+      <Filter>Header Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_list.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tests\test_vk_uplink.h">
+      <Filter>Header Files\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\latency_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\gui_localization.h">
+      <Filter>Header Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\gui_formatter.h">
+      <Filter>Header Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\build_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\windows_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_bandwidth.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_bandwidth_texture.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_latency_vector.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_add.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_sub.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_mul.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_mac.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_div.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_rem.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_isqrt.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_isqrt.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_isqrt.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_uplink_gpu.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_rcp.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_rcp.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_rcp.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_latency_scalar.comp">
+      <Filter>Source Files\shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_languages.h">
+      <Filter>embedded_resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_shaders.h">
+      <Filter>embedded_resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_icons.h">
+      <Filter>embedded_resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_fonts.h">
+      <Filter>embedded_resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_texts.h">
+      <Filter>embedded_resources</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\lang\en_US.lang">
+      <Filter>Source Files\lang</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GPUPerfTests.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

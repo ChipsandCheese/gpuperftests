@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPUPerfTests", "GPUPerfTests\GPUPerfTests.vcxproj", "{FEE90FBD-01D3-4BC4-BA79-DAF58D13B129}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA} = {2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31835B3B-B66C-47AA-8F71-E442B7A2E76E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitlab-ci.yml = .gitlab-ci.yml
+		ABOUT.md = ABOUT.md
+		CHANGELOG.md = CHANGELOG.md
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetBinarizer", "AssetBinarizer\AssetBinarizer.vcxproj", "{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEE90FBD-01D3-4BC4-BA79-DAF58D13B129}.Debug|x64.ActiveCfg = Debug|x64
+		{FEE90FBD-01D3-4BC4-BA79-DAF58D13B129}.Debug|x64.Build.0 = Debug|x64
+		{FEE90FBD-01D3-4BC4-BA79-DAF58D13B129}.Release|x64.ActiveCfg = Release|x64
+		{FEE90FBD-01D3-4BC4-BA79-DAF58D13B129}.Release|x64.Build.0 = Release|x64
+		{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}.Debug|x64.ActiveCfg = Release|x64
+		{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}.Debug|x64.Build.0 = Release|x64
+		{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}.Release|x64.ActiveCfg = Release|x64
+		{2CB32FEF-37E9-4795-BDBD-2A759C67BFFA}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B12EF788-0723-4417-A1CE-B066D2F13A23}
+	EndGlobalSection
+EndGlobal

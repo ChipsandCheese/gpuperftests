@@ -1,0 +1,99 @@
+// Copyright (c) 2021 - 2022, Nemes <nemes@nemez.net>
+// SPDX-License-Identifier: MIT
+// 
+// MIT License
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software andassociated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, andto permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+// 
+// The above copyright notice andthis permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+#version 450
+
+#extension GL_EXT_shader_explicit_arithmetic_types : require
+#extension GL_EXT_shader_explicit_arithmetic_types_int8 : require
+
+#define WORKGROUP_SIZE	256
+
+layout(local_size_x = WORKGROUP_SIZE, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) readonly buffer DummyInputBuffer {
+	i8vec4 data[];
+} dummy_inputs;
+
+layout(set = 0, binding = 1, std430) writeonly buffer DummyOutputBuffer {
+	i8vec4 data[];
+} dummy_outputs;
+
+layout(set = 0, binding = 2) readonly uniform UniformBuffer {
+	uint32_t loop_count;
+} uniform_buffer;
+
+void main() {
+	uint32_t thread_index = gl_LocalInvocationIndex * 16;
+	i8vec4 acc0 = dummy_inputs.data[thread_index];
+	i8vec4 acc1 = dummy_inputs.data[thread_index + 1];
+	i8vec4 acc2 = dummy_inputs.data[thread_index + 2];
+	i8vec4 acc3 = dummy_inputs.data[thread_index + 3];
+	i8vec4 acc4 = dummy_inputs.data[thread_index + 4];
+	i8vec4 acc5 = dummy_inputs.data[thread_index + 5];
+	i8vec4 acc6 = dummy_inputs.data[thread_index + 6];
+	i8vec4 acc7 = dummy_inputs.data[thread_index + 7];
+	i8vec4 acc8 = dummy_inputs.data[thread_index + 8];
+	i8vec4 acc9 = dummy_inputs.data[thread_index + 9];
+	i8vec4 acc10 = dummy_inputs.data[thread_index + 10];
+	i8vec4 acc11 = dummy_inputs.data[thread_index + 11];
+	i8vec4 acc12 = dummy_inputs.data[thread_index + 12];
+	i8vec4 acc13 = dummy_inputs.data[thread_index + 13];
+	i8vec4 acc14 = dummy_inputs.data[thread_index + 14];
+	i8vec4 acc15 = dummy_inputs.data[thread_index + 15];
+	
+	for (uint32_t i = 0; i < uniform_buffer.loop_count; i++) {
+		acc0 = dummy_inputs.data[0] / acc0;
+		acc1 = dummy_inputs.data[1] / acc1;
+		acc2 = dummy_inputs.data[2] / acc2;
+		acc3 = dummy_inputs.data[3] / acc3;
+		acc4 = dummy_inputs.data[4] / acc4;
+		acc5 = dummy_inputs.data[5] / acc5;
+		acc6 = dummy_inputs.data[6] / acc6;
+		acc7 = dummy_inputs.data[7] / acc7;
+		acc8 = dummy_inputs.data[8] / acc8;
+		acc9 = dummy_inputs.data[9] / acc9;
+		acc10 = dummy_inputs.data[10] / acc10;
+		acc11 = dummy_inputs.data[11] / acc11;
+		acc12 = dummy_inputs.data[12] / acc12;
+		acc13 = dummy_inputs.data[13] / acc13;
+		acc14 = dummy_inputs.data[14] / acc14;
+		acc15 = dummy_inputs.data[15] / acc15;
+	}
+
+	dummy_outputs.data[thread_index] = acc0;
+	dummy_outputs.data[thread_index + 1] = acc1;
+	dummy_outputs.data[thread_index + 2] = acc2;
+	dummy_outputs.data[thread_index + 3] = acc3;
+	dummy_outputs.data[thread_index + 4] = acc4;
+	dummy_outputs.data[thread_index + 5] = acc5;
+	dummy_outputs.data[thread_index + 6] = acc6;
+	dummy_outputs.data[thread_index + 7] = acc7;
+	dummy_outputs.data[thread_index + 8] = acc8;
+	dummy_outputs.data[thread_index + 9] = acc9;
+	dummy_outputs.data[thread_index + 10] = acc10;
+	dummy_outputs.data[thread_index + 11] = acc11;
+	dummy_outputs.data[thread_index + 12] = acc12;
+	dummy_outputs.data[thread_index + 13] = acc13;
+	dummy_outputs.data[thread_index + 14] = acc14;
+	dummy_outputs.data[thread_index + 15] = acc15;
+}

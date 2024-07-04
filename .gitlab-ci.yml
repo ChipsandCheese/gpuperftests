@@ -1,0 +1,100 @@
+stages:
+    - build
+    - publish
+
+variables:
+    WINDOWS_RELEASE_BINS: GPUPerfTests/x64/Release
+    WINDOWS_DEBUG_BINS: GPUPerfTests/x64/Debug
+    LINUX_BINS: GPUPerfTests/x64
+    BUILD_INFO_HEADER_FILE: GPUPerfTests/include/build_info.h
+    CHANGELOG_FILE: CHANGELOG.md
+
+build-debug:
+    stage: build
+    tags:
+        - windows
+    image: vcpp:v142-vulkan-sdk-1.3.211.0
+    rules:
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+          when: never
+        - if: $CI_COMMIT_TAG
+          when: manual
+        - when: on_success
+    script:
+        - cmd.exe /c 'build_info.bat %BUILD_INFO_HEADER_FILE%'
+        - MSBuild.exe .\GPUPerfTests.sln -t:clean
+        - MSBuild.exe .\GPUPerfTests.sln -t:build -p:Configuration="Debug"
+    artifacts:
+        name: GPUPerfTests-Debug-$CI_COMMIT_REF_SLUG
+        paths:
+            - $WINDOWS_DEBUG_BINS/GPUPerfTests.exe
+            - $WINDOWS_DEBUG_BINS/shaders
+        expire_in: 1 hour
+
+build-release:
+    stage: build
+    tags:
+        - windows
+    image: vcpp:v142-vulkan-sdk-1.3.211.0
+    rules:
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+          when: never
+        - when: on_success
+    script:
+        - cmd.exe /c 'build_info.bat %BUILD_INFO_HEADER_FILE%'
+        - MSBuild.exe .\GPUPerfTests.sln -t:clean
+        - MSBuild.exe .\GPUPerfTests.sln -t:build -p:Configuration="Release"
+    artifacts:
+        name: GPUPerfTests-Release-$CI_COMMIT_REF_SLUG
+        paths:
+            - $WINDOWS_RELEASE_BINS/GPUPerfTests.exe
+        expire_in: 1 hour
+
+build-linux:
+    stage: build
+    tags:
+        - linux
+    image: gpuperftests:1.0
+    rules:
+        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+          when: never
+        - when: on_success
+    script:
+        - chmod +x build_info.sh
+        - ./build_info.sh $BUILD_INFO_HEADER_FILE
+        - make clean
+        - make build
+    artifacts:
+        name: GPUPerfTests-Linux-$CI_COMMIT_REF_SLUG
+        paths:
+            - $LINUX_BINS/GPUPerfTests
+        expire_in: 1 hour
+
+publish:
+    stage: publish
+    tags:
+        - docker
+    image: registry.gitlab.com/gitlab-org/release-cli:latest
+    needs:
+        - job: build-release
+          artifacts: true
+        - job: build-linux
+          artifacts: true
+    rules:
+        - if: $CI_COMMIT_TAG
+    before_script:
+        - apk add --no-cache curl
+    script:
+        - RELEASE_NAME=$(echo "$CI_COMMIT_TAG" | tr '-' ' ' | tr '[:upper:]' '[:lower:]')
+        - RELEASE_VERSION=$(echo "$RELEASE_NAME" | cut -d ' ' -f2)
+        - grep -qi "$RELEASE_NAME" $CHANGELOG_FILE || { echo "Release \"$RELEASE_NAME\" not present in $CHANGELOG_FILE!"; exit 1; }
+        - cat $CHANGELOG_FILE | awk -v versionpattern="$RELEASE_NAME" 'BEGIN {IGNORECASE=1; p=0}; $0~versionpattern { p=1; next }; /# (pre)?release/ { if (p == 1) { exit; } else { p=0; next }}; p { print }' > release-description.txt
+        - grep -q "**Version Changes:**" release-description.txt || { echo "\"Version Changes\" section not present in release description!"; exit 1; }
+        - grep -q "**New Features:**" release-description.txt || { echo "\"New Features\" section not present in release description!"; exit 1; }
+        - grep -q "**Improvements:**" release-description.txt || { echo "\"Improvements\" section not present in release description!"; exit 1; }
+        - grep -q "**Bug Fixes:**" release-description.txt || { echo "\"Bug Fixes\" section not present in release description!"; exit 1; }
+        - grep -q "**Deprecated or Removed:**" release-description.txt || { echo "\"Deprecated or Removed\" section not present in release description!"; exit 1; }
+        - grep -qi "(unreleased)" release-description.txt && { echo "Release \"$RELEASE_NAME\" has not been properly released in $CHANGELOG_FILE!"; exit 1; }
+        - curl --header "JOB-TOKEN:$CI_JOB_TOKEN" --upload-file ./$WINDOWS_RELEASE_BINS/GPUPerfTests.exe "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/release/$CI_COMMIT_TAG/GPUPerfTests-$RELEASE_VERSION.exe"
+        - curl --header "JOB-TOKEN:$CI_JOB_TOKEN" --upload-file ./$LINUX_BINS/GPUPerfTests "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/release/$CI_COMMIT_TAG/GPUPerfTests-$RELEASE_VERSION-Linux"
+        - release-cli create --name "GPUPerfTests $(echo "$RELEASE_NAME" | awk '{ print toupper(substr($0,1,1)) substr($0,2) }')" --description "$(cat release-description.txt)" --tag-name "$CI_COMMIT_TAG" --ref "$CI_COMMIT_TAG" --assets-link "{\"name\":\"GPUPerfTests Windows $RELEASE_VERSION\",\"url\":\"$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/release/$CI_COMMIT_TAG/GPUPerfTests-$RELEASE_VERSION.exe\",\"link_type\":\"package\"}" --assets-link "{\"name\":\"GPUPerfTests Linux $RELEASE_VERSION\",\"url\":\"$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/release/$CI_COMMIT_TAG/GPUPerfTests-$RELEASE_VERSION-Linux\",\"link_type\":\"package\"}"

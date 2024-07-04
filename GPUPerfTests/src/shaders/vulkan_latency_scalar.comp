@@ -1,0 +1,132 @@
+// Copyright (c) 2022, Nemes <nemes@nemez.net>
+// SPDX-License-Identifier: MIT
+// 
+// MIT License
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software andassociated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, andto permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+// 
+// The above copyright notice andthis permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+#version 450
+
+#extension GL_EXT_shader_explicit_arithmetic_types : require
+
+#define VULKAN_LATENCY_HOP_STRIDE_BYTES             (512)
+#define VULKAN_LATENCY_POINTER_SIZE                 (4)
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) readonly buffer InputBuffer {
+	uint32_t inputs[];
+} input_buffer;
+
+layout(set = 0, binding = 1, std430) buffer OutputBuffer {
+	uint32_t outputs[];
+} output_buffer;
+
+layout(set = 0, binding = 2) readonly uniform UniformBuffer {
+	uint32_t hop_count;
+	uint32_t region_size;
+	uint32_t per_wg_offset;
+	uint32_t lru[VULKAN_LATENCY_HOP_STRIDE_BYTES / VULKAN_LATENCY_POINTER_SIZE];
+} uniform_buffer;
+
+uint32_t GetStartingOffset(uint32_t desired_offset) {
+    uint32_t stride_size = uint32_t(VULKAN_LATENCY_HOP_STRIDE_BYTES / VULKAN_LATENCY_POINTER_SIZE);
+    uint32_t region_strides = uniform_buffer.region_size / stride_size;
+    uint32_t loops = desired_offset / region_strides;
+    uint32_t remainder_offset = desired_offset % region_strides;
+    uint32_t current_stride_offset = 0;
+
+    for (uint32_t i = 0; i < loops; i++) {
+        current_stride_offset = uniform_buffer.lru[current_stride_offset];
+    }
+
+    return remainder_offset * stride_size + current_stride_offset;
+}
+
+void main() {
+	uint32_t current_pointer = GetStartingOffset(gl_GlobalInvocationID.x * uniform_buffer.per_wg_offset);
+
+	for (uint32_t i = 0; i < uniform_buffer.hop_count; i++) {
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+		current_pointer = input_buffer.inputs[current_pointer];
+	}
+	output_buffer.outputs[0] = input_buffer.inputs[current_pointer];
+}

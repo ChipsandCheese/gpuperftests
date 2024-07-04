@@ -1,0 +1,7 @@
+/.vs/
+/.vscode/
+/Libraries/nativefiledialog-extended-1.0.1/build
+/GPUPerfTests/x64/
+/AssetBinarizer/x64/
+/x64/
+/GPUPerfTests/embedded_resources/

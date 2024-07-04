@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Libraries\imgui-1.88\include\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_demo.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_draw.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_freetype.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_tables.cpp" />
+    <ClCompile Include="..\Libraries\imgui-1.88\include\imgui_widgets.cpp" />
+    <ClCompile Include="..\Libraries\libspng-0.7.2\src\spng.c" />
+    <ClCompile Include="src\buffer_filler.c" />
+    <ClCompile Include="src\gui\gui.cpp" />
+    <ClCompile Include="src\gui\gui_benchmarks.cpp" />
+    <ClCompile Include="src\gui\gui_formatter.cpp" />
+    <ClCompile Include="src\gui\gui_localization.cpp" />
+    <ClCompile Include="src\helper.c" />
+    <ClCompile Include="src\latency_helper.c" />
+    <ClCompile Include="src\logger.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\process_runner.c" />
+    <ClCompile Include="src\resources.c" />
+    <ClCompile Include="src\runner.c" />
+    <ClCompile Include="src\tests\test_vk_bandwidth.c" />
+    <ClCompile Include="src\tests\test_vk_info.c" />
+    <ClCompile Include="src\tests\test_vk_latency.c" />
+    <ClCompile Include="src\tests\test_vk_list.c" />
+    <ClCompile Include="src\tests\test_vk_rate.c" />
+    <ClCompile Include="src\tests\test_vk_uplink.c" />
+    <ClCompile Include="src\vulkan_command_buffer.c" />
+    <ClCompile Include="src\vulkan_compute_pipeline.c" />
+    <ClCompile Include="src\vulkan_helper.c" />
+    <ClCompile Include="src\vulkan_memory.c" />
+    <ClCompile Include="src\vulkan_runner.c" />
+    <ClCompile Include="src\vulkan_shader.c" />
+    <ClCompile Include="src\vulkan_staging.c" />
+    <ClCompile Include="src\vulkan_texture.c" />
+    <ClCompile Include="src\windows_helper.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_bandwidth.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_latency_vector.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_bandwidth_texture.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int8_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int16_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int32_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_add.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_sub.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_mul.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_mac.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_div.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_int64_rem.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="embedded_resources\ab_embedded_icons.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_icons.h" "$(ProjectDir)icon\*.png"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_icons.h" "$(ProjectDir)icon\*.png"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)embedded_resources\ab_embedded_icons.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)embedded_resources\ab_embedded_icons.h</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Processing Embedded Icon Files</Message>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Processing Embedded Icon Files</Message>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_fonts.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_fonts.h" "$(ProjectDir)font\*.ttf"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Processing Embedded Font Files</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_fonts.h" "$(ProjectDir)font\*.ttf"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Processing Embedded Font Files</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)embedded_resources\ab_embedded_fonts.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)embedded_resources\ab_embedded_fonts.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+    <ClInclude Include="include\build_info.h" />
+    <ClInclude Include="include\gui\gui_formatter.h" />
+    <ClInclude Include="resource.h" />
+    <CustomBuild Include="embedded_resources\ab_embedded_languages.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_languages.h" "$(ProjectDir)src\lang\en_US.lang"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Processing Embedded Language Files</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)embedded_resources\ab_embedded_languages.h;%(Outputs)</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_languages.h" "$(ProjectDir)src\lang\en_US.lang"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Processing Embedded Language Files</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)embedded_resources\ab_embedded_languages.h;%(Outputs)</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_shaders.h">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)embedded_resources\ab_embedded_shaders.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)embedded_resources\ab_embedded_shaders.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_shaders.h" "$(OutDir)shaders\*.spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Processing Embedded Shader Files</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_shaders.h" "$(OutDir)shaders\*.spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Processing Embedded Shader Files</Message>
+    </CustomBuild>
+    <CustomBuild Include="embedded_resources\ab_embedded_texts.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_texts.h" "$(SolutionDir)LICENSE" "$(SolutionDir)ABOUT.md" "$(SolutionDir)CHANGELOG.md"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Processing Embedded Text Files</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)AssetBinarizer\$(Platform)\Release\AssetBinarizer.exe" -v -o "$(ProjectDir)embedded_resources\ab_embedded_texts.h" "$(SolutionDir)LICENSE" "$(SolutionDir)ABOUT.md" "$(SolutionDir)CHANGELOG.md"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Processing Embedded Text Files</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)embedded_resources\ab_embedded_texts.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)embedded_resources\ab_embedded_texts.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+    <ClInclude Include="include\buffer_filler.h" />
+    <ClInclude Include="include\gui\gui.h" />
+    <ClInclude Include="include\gui\gui_benchmarks.h" />
+    <ClInclude Include="include\gui\gui_localization.h" />
+    <ClInclude Include="include\helper.h" />
+    <ClInclude Include="include\imconfig.h" />
+    <ClInclude Include="include\latency_helper.h" />
+    <ClInclude Include="include\logger.h" />
+    <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\process_runner.h" />
+    <ClInclude Include="include\resources.h" />
+    <ClInclude Include="include\runner.h" />
+    <ClInclude Include="include\sanitize_windows_h.h" />
+    <ClInclude Include="include\tests\test_vk_bandwidth.h" />
+    <ClInclude Include="include\tests\test_vk_info.h" />
+    <ClInclude Include="include\tests\test_vk_latency.h" />
+    <ClInclude Include="include\tests\test_vk_list.h" />
+    <ClInclude Include="include\tests\test_vk_rate.h" />
+    <ClInclude Include="include\tests\test_vk_uplink.h" />
+    <ClInclude Include="include\vulkan_command_buffer.h" />
+    <ClInclude Include="include\vulkan_compute_pipeline.h" />
+    <ClInclude Include="include\vulkan_helper.h" />
+    <ClInclude Include="include\vulkan_memory.h" />
+    <ClInclude Include="include\vulkan_runner.h" />
+    <ClInclude Include="include\vulkan_shader.h" />
+    <ClInclude Include="include\vulkan_staging.h" />
+    <ClInclude Include="include\vulkan_texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_isqrt.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_isqrt.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_isqrt.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_uplink_gpu.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp16_rcp.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp32_rcp.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+    </CustomBuild>
+    <CustomBuild Include="src\shaders\vulkan_rate_fp64_rcp.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\shaders\vulkan_latency_scalar.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslangValidator.exe -V -o "$(OutDir)\shaders\%(Filename).spv" "%(Identity)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Shader to SPIR-V</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\shaders\%(Filename).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\lang\en_US.lang">
+      <FileType>Document</FileType>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Copy Language File</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Copy Language File</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy /y "%(Identity)" "$(OutDir)lang\%(Filename)%(Extension)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy /y "%(Identity)" "$(OutDir)lang\%(Filename)%(Extension)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)lang\%(Filename)%(Extension)</Outputs>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)lang\%(Filename)%(Extension)</Outputs>
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GPUPerfTests.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{fee90fbd-01d3-4bc4-ba79-daf58d13b129}</ProjectGuid>
+    <RootNamespace>GPUPerfTests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GPUPerfTests</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <SpectreMitigation>Spectre</SpectreMitigation>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)Libraries\libspng-0.7.2\include;$(SolutionDir)Libraries\zlib-1.2.13\include;$(SolutionDir)Libraries\nativefiledialog-extended-1.0.1\src\include;$(SolutionDir)Libraries\imgui-1.88\include;$(SolutionDir)Libraries\freetype-2.12.1\include;$(SolutionDir)Libraries\glew-2.1.0\include;$(VC_IncludePath);$(SolutionDir)$(ProjectName)\include;$(SolutionDir)$(ProjectName)\embedded_resources;$(WindowsSDK_IncludePath);$(SolutionDir)Libraries\Vulkan\include;$(SolutionDir)Libraries\glfw-3.3.2.bin.WIN64\include</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\nativefiledialog-extended-1.0.1\lib;$(SolutionDir)Libraries\freetype-2.12.1\lib;$(SolutionDir)Libraries\zlib-1.2.13\lib;$(SolutionDir)Libraries\glew-2.1.0\lib\Release\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Libraries\glfw-3.3.2.bin.WIN64\lib-vc2019;$(SolutionDir)Libraries\Vulkan\lib</LibraryPath>
+    <SourcePath>$(SolutionDir)Libraries\imgui-1.88\include;$(SolutionDir)Libraries\libspng-0.7.2\src;$(SourcePath)</SourcePath>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)Libraries\libspng-0.7.2\include;$(SolutionDir)Libraries\zlib-1.2.13\include;$(SolutionDir)Libraries\nativefiledialog-extended-1.0.1\src\include;$(SolutionDir)Libraries\imgui-1.88\include;$(SolutionDir)Libraries\freetype-2.12.1\include;$(SolutionDir)Libraries\glew-2.1.0\include;$(VC_IncludePath);$(SolutionDir)$(ProjectName)\include;$(SolutionDir)$(ProjectName)\embedded_resources;$(WindowsSDK_IncludePath);$(SolutionDir)Libraries\Vulkan\include;$(SolutionDir)Libraries\glfw-3.3.2.bin.WIN64\include</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\nativefiledialog-extended-1.0.1\lib;$(SolutionDir)Libraries\freetype-2.12.1\lib;$(SolutionDir)Libraries\zlib-1.2.13\lib;$(SolutionDir)Libraries\glew-2.1.0\lib\Release\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Libraries\glfw-3.3.2.bin.WIN64\lib-vc2019;$(SolutionDir)Libraries\Vulkan\lib</LibraryPath>
+    <SourcePath>$(SolutionDir)Libraries\imgui-1.88\include;$(SolutionDir)Libraries\libspng-0.7.2\src;$(SourcePath)</SourcePath>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>vulkan-1.lib;opengl32.lib;glew32s.lib;glfw3.lib;freetype.lib;zlib.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)icon\icon_debug.ico" "$(ProjectDir)$(Platform)\icon.ico*"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy exe icon to build directory</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level3</WarningLevel>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>vulkan-1.lib;opengl32.lib;glew32s.lib;glfw3.lib;freetype.lib;zlib.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)icon\icon.ico" "$(ProjectDir)$(Platform)\icon.ico*"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy exe icon to build directory</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

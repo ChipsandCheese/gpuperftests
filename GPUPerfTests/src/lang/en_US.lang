@@ -1,0 +1,101 @@
+// Main GUI titles
+gui.title.controls=Run Queue & Controls
+gui.title.benchmarks=Benchmarks
+gui.title.export=Export CSV
+gui.title.about=About
+
+// Run Queue & Controls Section Texts
+gui.section.controls.current=Currently running: 
+gui.section.controls.none=None
+gui.section.controls.list=Run Queue List
+gui.section.controls.list.button.remove=Remove
+gui.section.controls.list.button.cancel=Cancel
+gui.section.controls.button.console=Console
+gui.section.controls.button.about=About
+gui.section.controls.button.export=Export CSV
+
+// Benchmarks Section Texts
+gui.section.benchmarks.list=Benchmarks List
+
+// Main Section Texts
+gui.section.main.none_selected=No Benchmark Selected
+gui.section.main.run_all=Run All
+gui.section.main.result.blank=
+gui.section.main.result.running=Running...
+gui.section.main.result.unsupported=Unsupported
+gui.section.main.result.error=Error
+gui.section.main.result.cancelled=Cancelled
+
+// Export Popup Texts
+gui.popup.export.instruct=Select benchmarks to export
+gui.popup.export.button.select_all=Select All
+gui.popup.export.button.clear_all=Clear All
+gui.popup.export.button.cancel=Cancel
+gui.popup.export.button.export=Export
+
+// About Popup Texts
+gui.popup.about.button.close=Close
+gui.popup.about.section.about=About
+gui.popup.about.section.changelog=Changelog
+gui.popup.about.section.build=Build Info
+gui.popup.about.buildinfo.title=Detailed Build Information
+gui.popup.about.buildinfo.version=Build Version
+gui.popup.about.buildinfo.type=Build Type
+gui.popup.about.buildinfo.configuration=Build Configuration
+gui.popup.about.buildinfo.configuration.release=Release
+gui.popup.about.buildinfo.configuration.debug=Debug
+gui.popup.about.buildinfo.source=Build Source
+gui.popup.about.buildinfo.source.local=Local Source Code
+gui.popup.about.buildinfo.branch=Source Branch
+gui.popup.about.buildinfo.branch.local=Local Branch
+
+// Benchmark - Cache & Memory Bandwidth
+bench.membandwidth.panel=Cache & Memory Bandwidth
+bench.membandwidth.tooltip=Measures bandwidth across a wide range of region sizes, showing cache boundaries as well as the bandwidth of each cache level and global memory.
+
+// Benchmark - Cache & Memory Latency
+bench.memlatency.panel=Cache & Memory Latency
+bench.memlatency.tooltip=Measures latency across a wide range of region sizes, showing cache boundaries as well as the latency of each cache level and global memory.
+bench.memlatency.section.vector=Vector Cache & Memory Latency
+bench.memlatency.section.scalar=Scalar Cache & Memory Latency
+bench.memlatency.tooltip.vector=Measures latency using vector data loads, this is the standard memory access method.
+bench.memlatency.tooltip.scalar=Measures latency using scalar data loads, on some GPUs this may be faster than vector loads but it is only applicable to some workloads.
+
+// Benchmark - Uplink Bandwidth & Latency
+bench.uplink.panel=Uplink Bandwidth & Latency
+bench.uplink.tooltip=Measures CPU to GPU link bandwidth and latency through several means. 
+bench.uplink.gpu_to_cpu.copy=GPU to CPU (Copy Engine)
+bench.uplink.gpu_to_cpu.compute=GPU to CPU (Compute Shader)
+bench.uplink.gpu_to_cpu.mapped=GPU to CPU (Mapped Buffer)
+bench.uplink.cpu_to_gpu.copy=CPU to GPU (Copy Engine)
+bench.uplink.cpu_to_gpu.compute=CPU to GPU (Compute Shader)
+bench.uplink.cpu_to_gpu.mapped=CPU to GPU (Mapped Buffer)
+bench.uplink.latency.short=Latency (10s)
+bench.uplink.latency.long=Latency (2min)
+
+// Benchmark - Instruction Rate
+bench.insnrate.panel=Instruction Rate
+bench.insnrate.tooltip=Measures the throughput of different arithmetic operations. 
+bench.insnrate.section.madd=Multiply-Add
+bench.insnrate.section.add=Add
+bench.insnrate.section.sub=Subtract
+bench.insnrate.section.mul=Multiply
+bench.insnrate.section.div=Divide
+bench.insnrate.section.rem=Remainder
+bench.insnrate.section.rcp=Reciprocal
+bench.insnrate.section.isqrt=Inverse Square Root
+bench.insnrate.format.fp16=FP16
+bench.insnrate.format.fp32=FP32
+bench.insnrate.format.fp64=FP64
+bench.insnrate.format.int8=INT8
+bench.insnrate.format.int16=INT16
+bench.insnrate.format.int32=INT32
+bench.insnrate.format.int64=INT64
+bench.insnrate.tooltip.madd=Measures multiply-add (A * B + C) throughput.
+bench.insnrate.tooltip.add=Measures add (A + B) throughput.
+bench.insnrate.tooltip.sub=Measures subtract (A - B) throughput.
+bench.insnrate.tooltip.mul=Measures multiply (A * B) throughput.
+bench.insnrate.tooltip.div=Measures divide (A / B) throughput.
+bench.insnrate.tooltip.rem=Measures remainder (A %% B) throughput.
+bench.insnrate.tooltip.rcp=Measures reciprocal (1 / X) throughput.
+bench.insnrate.tooltip.isqrt=Measures inverse square root (1 / sqrt(X)) throughput.
