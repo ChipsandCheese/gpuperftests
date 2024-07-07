@@ -22,20 +22,25 @@
 // SOFTWARE.
 
 #include "main.h"
+#include "logger.h"
+#include "helper.h"
+#include <stdarg.h>
+#include <spng.h>
 #ifdef _WIN32
 #include "sanitize_windows_h.h"
 #include <Windows.h>
 #else
 #include <pthread.h>
-#include <sys/sysinfo.h>
 #include <sys/time.h>
 #include <sched.h>
 #include <unistd.h>
 #endif
-#include "logger.h"
-#include "helper.h"
-#include <stdarg.h>
-#include <spng.h>
+#ifdef __linux
+#include <sys/sysinfo.h>
+#elif __APPLE__
+#include <sys/sysctl.h>
+#include <mach/mach.h>
+#endif
 
 #define _HELPER_BYTE_SUFFIX "B"
 #define _HELPER_BIT_SUFFIX  "b"
@@ -566,10 +571,25 @@ uint64_t HelperGetFreeSystemMemory() {
     } else {
         return 0;
     }
-#else
+#elif __linux
     struct sysinfo info;
     if (sysinfo(&info) == 0) {
         return (uint64_t)info.freeram * (uint64_t)info.mem_unit;
+    } else {
+        return 0;
+    }
+#elif __APPLE__
+    mach_port_t host_port;
+    mach_msg_type_number_t host_size;
+    vm_size_t page_size;
+    vm_statistics64_data_t vm_stats;
+
+    host_port = mach_host_self();
+    host_size = sizeof(vm_statistics64_data_t) / sizeof(integer_t);
+
+    if (host_page_size(host_port, &page_size) == KERN_SUCCESS ||
+        host_statistics64(host_port, HOST_VM_INFO64, (host_info64_t)&vm_stats, &host_size) == KERN_SUCCESS) {
+        return (uint64_t)vm_stats.free_count * (uint64_t)page_size;
     } else {
         return 0;
     }
@@ -583,7 +603,7 @@ uint32_t HelperGetProcessorCount() {
     GetSystemInfo(&system_info);
 
     return (uint32_t)system_info.dwNumberOfProcessors;
-#else
+#elif __linux
     cpu_set_t cpu_set;
     HelperClear(cpu_set);
     if (sched_getaffinity(0, sizeof(cpu_set), &cpu_set) == 0) {
@@ -596,6 +616,14 @@ uint32_t HelperGetProcessorCount() {
                 }
             }
         }
+        return thread_count;
+    } else {
+        return 1;
+    }
+#elif __APPLE__
+    uint32_t thread_count;
+    size_t thread_count_len = sizeof(thread_count);
+    if (sysctlbyname("hw.ncpu", &thread_count, &thread_count_len, NULL, 0) == 0) {
         return thread_count;
     } else {
         return 1;
