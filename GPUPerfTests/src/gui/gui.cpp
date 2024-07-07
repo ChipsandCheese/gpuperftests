@@ -312,9 +312,9 @@ static void _GuiRenderSection(uint32_t gpu_count, gui_section *section) {
             gui_benchmark *display_benchmark = (gui_benchmark *)HelperArrayListGet(&(section->benchmarks[0]), j);
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::Text(GuiLocalizationTranslate(&(display_benchmark->display_name)));
+            ImGui::Text("%s", GuiLocalizationTranslate(&(display_benchmark->display_name)));
             if (ImGui::IsItemHovered()) {
-                ImGui::SetTooltip(display_benchmark->test_name);
+                ImGui::SetTooltip("%s", display_benchmark->test_name);
             }
             for (uint32_t i = 0; i < gpu_count; i++) {
                 gui_benchmark *benchmark = (gui_benchmark *)HelperArrayListGet(&(section->benchmarks[i]), j);
@@ -376,11 +376,11 @@ static void _GuiRenderSection(uint32_t gpu_count, gui_section *section) {
             const char *label = (const char *)HelperArrayListGet(&(section->labels), j);
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::Text(label);
+            ImGui::Text("%s", label);
             for (uint32_t i = 0; i < gpu_count; i++) {
                 gui_benchmark *benchmark = (gui_benchmark *)HelperArrayListGet(&(section->benchmarks[i]), 0);
                 if (ImGui::IsItemHovered()) {
-                    ImGui::SetTooltip(benchmark->test_name);
+                    ImGui::SetTooltip("%s", benchmark->test_name);
                 }
                 ImGui::TableNextColumn();
                 const char *button_label = NULL;
@@ -622,8 +622,8 @@ test_status GuiRun() {
             ImGui::SetNextWindowPos(ImVec2(0, (float)height - info_corner_height));
             ImGui::SetNextWindowSize(ImVec2(sidebar_width, info_corner_height));
             ImGui::Begin(_GuiTranslateImGuiString(&gui_string_title_controls), NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize);
-            ImGui::Text(GuiLocalizationTranslate(&gui_string_controls_current));
-            ImGui::Text(gui_current_benchmark != NULL ? gui_current_benchmark->test_name : GuiLocalizationTranslate(&gui_string_controls_none));
+            ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_controls_current));
+            ImGui::Text(gui_current_benchmark != NULL ? gui_current_benchmark->test_name : GuiLocalizationTranslate(&gui_string_controls_none), "%s");
             if (gui_current_benchmark != NULL) {
                 ImGui::SameLine(sidebar_width - style.ItemSpacing.x - queue_button_width - style.ScrollbarSize);
                 if (ImGui::Button(_GuiTranslateImGuiString(&gui_string_controls_cancel), ImVec2(queue_button_width, 0))) {
@@ -635,7 +635,7 @@ test_status GuiRun() {
             for (size_t queue_index = 0; queue_index < HelperLinkedListSize(&gui_queue); queue_index++) {
                 gui_queued_benchmark *benchmark = (gui_queued_benchmark *)HelperLinkedListGet(&gui_queue, queue_index);
 
-                ImGui::Text(benchmark->benchmark->test_name);
+                ImGui::Text("%s", benchmark->benchmark->test_name);
                 ImGui::SameLine(sidebar_width - style.ItemSpacing.x - 2 * style.ItemInnerSpacing.x - queue_button_width - style.ScrollbarSize);
                 if (ImGui::Button(_GuiTranslateImGuiStringTestSuffix(&(benchmark->cancel_button), "QueueList", benchmark->sequential_queue_id, 0), ImVec2(queue_button_width, 0))) {
                     HelperLinkedListRemove(&gui_queue, queue_index);
@@ -688,7 +688,7 @@ test_status GuiRun() {
                     ImGui::SetNextWindowSize(ImVec2(tooltip_width, 0.0f));
                     ImGui::BeginTooltip();
                     ImGui::PushTextWrapPos(0.0f);
-                    ImGui::Text(GuiLocalizationTranslate(&(panel->panel_tooltip_description)));
+                    ImGui::Text("%s", GuiLocalizationTranslate(&(panel->panel_tooltip_description)));
                     ImGui::EndTooltip();
                 }
             }
@@ -710,7 +710,7 @@ test_status GuiRun() {
                                 ImGui::SetNextWindowSize(ImVec2(tooltip_width, 0.0f));
                                 ImGui::BeginTooltip();
                                 ImGui::PushTextWrapPos(0.0f);
-                                ImGui::Text(GuiLocalizationTranslate(&(section->section_tooltip_description)));
+                                ImGui::Text("%s", GuiLocalizationTranslate(&(section->section_tooltip_description)));
                                 ImGui::EndTooltip();
                             }
                             if (tab_selected) {
@@ -738,7 +738,7 @@ test_status GuiRun() {
                 ImGui::SetNextWindowSize(ImVec2(window_width, window_height));
                 ImGui::Begin(_GuiTranslateImGuiString(&gui_string_title_export), &gui_exporting, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize);
                 ImGui::SetWindowFocus();
-                ImGui::Text(GuiLocalizationTranslate(&gui_string_export_instruct));
+                ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_export_instruct));
                 ImGui::BeginListBox("##BenchmarkSelectionListbox", ImVec2(-1, ImGui::GetFrameHeight() - 3 * ImGui::GetTextLineHeightWithSpacing()));
                 for (size_t i = 0; i < panel_count; i++) {
                     gui_panel *panel = (gui_panel *)HelperArrayListGet(benchmark_panels, i);
@@ -874,18 +874,18 @@ test_status GuiRun() {
                     }
                     if (ImGui::BeginTabItem(_GuiTranslateImGuiString(&gui_string_about_build), NULL, ImGuiTabItemFlags_NoCloseWithMiddleMouseButton)) {
                         ImGui::PushFont(gui_font_heading);
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_title));
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_title));
                         ImGui::PopFont();
                         ImGui::Separator();
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_version));
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_version));
                         ImGui::SameLine();
                         ImGui::SetCursorPosX(ImGui::GetWindowWidth() - style.WindowPadding.x - ImGui::CalcTextSize(about_section_version_string).x);
-                        ImGui::Text(about_section_version_string);
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_type));
+                        ImGui::Text("%s", about_section_version_string);
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_type));
                         ImGui::SameLine();
                         ImGui::SetCursorPosX(ImGui::GetWindowWidth() - style.WindowPadding.x - ImGui::CalcTextSize(BUILD_INFO_TYPE_STRING).x);
                         ImGui::Text(BUILD_INFO_TYPE_STRING);
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_configuration));
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_configuration));
 #ifdef _DEBUG
                         const char *configuration_name = GuiLocalizationTranslate(&gui_string_about_buildinfo_configuration_debug);
 #else
@@ -893,8 +893,8 @@ test_status GuiRun() {
 #endif
                         ImGui::SameLine();
                         ImGui::SetCursorPosX(ImGui::GetWindowWidth() - style.WindowPadding.x - ImGui::CalcTextSize(configuration_name).x);
-                        ImGui::Text(configuration_name);
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_source));
+                        ImGui::Text("%s", configuration_name);
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_source));
 #ifdef BUILD_INFO_SHA
                         const char *build_source_string = BUILD_INFO_SHA;
                         const char *build_branch_string = BUILD_INFO_BRANCH;
@@ -904,11 +904,11 @@ test_status GuiRun() {
 #endif
                         ImGui::SameLine();
                         ImGui::SetCursorPosX(ImGui::GetWindowWidth() - style.WindowPadding.x - ImGui::CalcTextSize(build_source_string).x);
-                        ImGui::Text(build_source_string);
-                        ImGui::Text(GuiLocalizationTranslate(&gui_string_about_buildinfo_branch));
+                        ImGui::Text("%s", build_source_string);
+                        ImGui::Text("%s", GuiLocalizationTranslate(&gui_string_about_buildinfo_branch));
                         ImGui::SameLine();
                         ImGui::SetCursorPosX(ImGui::GetWindowWidth() - style.WindowPadding.x - ImGui::CalcTextSize(build_branch_string).x);
-                        ImGui::Text(build_branch_string);
+                        ImGui::Text("%s", build_branch_string);
                         ImGui::EndTabItem();
                     }
                     ImGui::EndTabBar();
