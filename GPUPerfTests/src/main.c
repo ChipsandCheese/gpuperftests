@@ -47,7 +47,11 @@ int main(int argc, const char **argv) {
     const char *test_identifier = NULL;
     bool print_help = false;
     result_format = test_result_readable;
+#ifndef _CLI
     ui_mode = test_ui_mode_gui;
+#else
+    ui_mode = test_ui_mode_cli;
+#endif
     const char *current_key = NULL;
     for (int i = 1; i < argc; i++) {
         if (current_key == NULL) {
@@ -62,9 +66,11 @@ int main(int argc, const char **argv) {
             } else if (strcmp(current_key, "--raw") == 0 || strcmp(current_key, "-r") == 0) {
                 result_format = test_result_raw;
                 current_key = NULL;
+#ifndef _CLI
             } else if (strcmp(current_key, "--cli") == 0 || strcmp(current_key, "-c") == 0) {
                 ui_mode = test_ui_mode_cli;
                 current_key = NULL;
+#endif
             }
         } else {
             const char *current_value = argv[i];
@@ -72,17 +78,20 @@ int main(int argc, const char **argv) {
                 gpu_identifier = strtol(current_value, NULL, 10);
             } else if (strcmp(current_key, "--test") == 0 || strcmp(current_key, "-t") == 0) {
                 test_identifier = current_value;
+#ifndef _CLI
             } else if (strcmp(current_key, "--mode") == 0 || strcmp(current_key, "-m") == 0) {
                 if (strcmp(current_value, "cli") == 0) {
                     ui_mode = test_ui_mode_cli;
                 } else {
                     ui_mode = test_ui_mode_gui;
                 }
+#endif
             }
             current_key = NULL;
         }
     }
     if (ui_mode != test_ui_mode_cli) {
+#ifndef _CLI
         if (ui_mode == test_ui_mode_gui) {
 #ifndef _DEBUG
 #ifdef _WIN32
@@ -98,6 +107,7 @@ int main(int argc, const char **argv) {
             console_visible = true;
 #endif
         }
+#endif
     } else {
         test_status status = RunnerRegisterTests();
         if (!TEST_SUCCESS(status)) {
@@ -108,8 +118,10 @@ int main(int argc, const char **argv) {
             SEPARATOR();
             INFO("ARGUMENTS:\n");
             INFO("    --help/-h: Prints this\n");
+#ifndef _CLI
             INFO("    --mode/-m <mode>: Specify how to run the application (gui, cli). Default: gui\n");
             INFO("    --cli/-c: Shorthand for '--mode cli'\n");
+#endif
             INFO("    --device/-d <device id>: Specifies which device to run tests on. Default: -1\n");
             INFO("    --test/-t <test id>: Specifies which test to run. Required\n");
             INFO("    --csv/-s: Print final results in CSV format. Optional\n");
@@ -145,9 +157,11 @@ const char *MainGetBinaryPath() {
     return binary_path;
 }
 
+#ifndef _CLI
 test_ui_mode MainGetTestUIMode() {
     return ui_mode;
 }
+#endif
 
 void MainToggleConsoleWindow() {
 #ifdef _WIN32
