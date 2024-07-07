@@ -25,7 +25,6 @@
 #include "logger.h"
 #include "helper.h"
 #include <stdarg.h>
-#include <spng.h>
 #ifdef _WIN32
 #include "sanitize_windows_h.h"
 #include <Windows.h>
@@ -40,6 +39,9 @@
 #elif __APPLE__
 #include <sys/sysctl.h>
 #include <mach/mach.h>
+#endif
+#ifndef _CLI
+#include <spng.h>
 #endif
 
 #define _HELPER_BYTE_SUFFIX "B"
@@ -134,6 +136,7 @@ void HelperCloseFile(void *file_handle) {
     }
 }
 
+#ifndef _CLI
 const char *HelperDecodePng(const char *data, size_t size, int spng_format, uint32_t *image_width, uint32_t *image_height) {
     spng_ctx *ctx = spng_ctx_new(0);
     spng_set_png_buffer(ctx, data, size);
@@ -161,6 +164,7 @@ const char *HelperDecodePng(const char *data, size_t size, int spng_format, uint
     }
     return (const char *)png_data;
 }
+#endif
 
 void HelperResetTimestamp() {
 #ifdef _WIN32

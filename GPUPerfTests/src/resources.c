@@ -25,11 +25,13 @@
 #include "logger.h"
 #include "resources.h"
 #define EMBED_RESOURCES
-#include "ab_embedded_languages.h"
 #include "ab_embedded_shaders.h"
+#ifndef _CLI
+#include "ab_embedded_languages.h"
 #include "ab_embedded_icons.h"
 #include "ab_embedded_fonts.h"
 #include "ab_embedded_texts.h"
+#endif
 
 test_status ResourcesGetShaderFile(const char *filepath, const char **data, size_t *size) {
     for (size_t i = 0; i < ab_embedded_resource_count_ab_embedded_shaders_h; i++) {
@@ -43,6 +45,7 @@ test_status ResourcesGetShaderFile(const char *filepath, const char **data, size
     return TEST_EMBEDDED_RESOURCE_NOT_FOUND;
 }
 
+#ifndef _CLI
 test_status ResourcesGetLanguageFile(const char *filepath, const char **data, size_t *size) {
     for (size_t i = 0; i < ab_embedded_resource_count_ab_embedded_languages_h; i++) {
         struct _ab_embedded_resource_t *resource = &(ab_embedded_resources_ab_embedded_languages_h[i]);
@@ -90,3 +93,4 @@ test_status ResourcesGetTextFile(const char *filepath, const char **data, size_t
     }
     return TEST_EMBEDDED_RESOURCE_NOT_FOUND;
 }
+#endif
