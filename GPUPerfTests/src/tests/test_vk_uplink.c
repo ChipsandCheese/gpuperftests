@@ -661,7 +661,7 @@ static void _VulkanUplinkCleanUpMemcpyThreads() {
 
 static uint64_t _VulkanUplinkMemcpy() {
     HelperAtomicBoolSet(&memcpy_thread_run_flag);
-    memcpy_threads = HelperCreateThreads(memcpy_thread_count, _VulkanUplinkMemcpyThreadFunc, memcpy_thread_data);
+    memcpy_threads = HelperCreateThreads(memcpy_thread_count, _VulkanUplinkMemcpyThreadFunc, (void **)memcpy_thread_data);
     if (memcpy_threads == NULL) {
         return 0;
     }
