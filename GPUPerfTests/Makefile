@@ -1,11 +1,11 @@
 # BUILD CONFIGURATION
-CC := gcc
-CXX := g++
-LD := g++
-SHADERC := glslangValidator
+CC ?= gcc
+CXX ?= g++
+SHADERC ?= glslangValidator
 CFLAGS += $(CPPFLAGS) $(INC_FILES)
 CXXFLAGS += $(CPPFLAGS) $(INC_FILES) -std=c++11
-LDFLAGS = -lvulkan -lpthread
+LDFLAGS_LINUX = -lvulkan -lpthread
+LDFLAGS_DARWIN = -lMoltenVK -framework Foundation -framework CoreFoundation -framework CoreGraphics -framework QuartzCore -framework IOKit -framework IOSurface -framework AppKit -framework Metal -lpthread
 LDFLAGS_GUI = -lGL -lglfw -lfreetype -lz `pkg-config --libs gtk+-3.0` -ldl
 DEFINES =
 
@@ -15,6 +15,7 @@ BUILD_DIR = $(OUT_DIR)/build
 BINARY = $(OUT_DIR)/GPUPerfTests
 
 # LIBRARIES
+
 LIBRARY_VULKAN = ../Libraries/Vulkan
 LIBRARY_IMGUI = ../Libraries/imgui-1.88
 LIBRARY_FREETYPE = ../Libraries/freetype-2.12.1
@@ -45,6 +46,7 @@ EMBEDDED_TEXTS_HEADER = $(EMBEDDED_RESOURCES_DIR)/ab_embedded_texts.h
 # SOURCE FILES
 SRC_DIR = src
 INC_DIR = include $(EMBEDDED_RESOURCES_DIR) $(LIBRARY_VULKAN)/include
+INC_DIR_GUI = $(LIBRARY_LIBSPNG)/include $(LIBRARY_IMGUI)/include $(LIBRARY_GLEW)/include $(LIBRARY_GLFW)/include $(LIBRARY_FREETYPE)/include $(LIBRARY_NATIVEFILEDIALOGEXTENDED)/src/include
 
 IMGUI_SRC = $(LIBRARY_IMGUI)/include
 LIBSPNG_SRC = $(LIBRARY_LIBSPNG)/src
@@ -62,13 +64,25 @@ INC_FILES = $(addprefix -I,$(INC_DIR))
 SHADER_FILES = $(shell find "$(SHADER_DIR)" -type f -name '*.comp')
 SHADER_BINS = $(patsubst $(SHADER_DIR)/%.comp,$(BUILD_DIR)/%.spv,$(SHADER_FILES))
 
+# ARCH-SPECIFIC LINKING
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Linux)
+ 	LDFLAGS += $(LDFLAGS_LINUX)
+endif
+
+ifeq ($(UNAME),Darwin)
+ 	CLI=1
+ 	LDFLAGS += $(LDFLAGS_DARWIN)
+endif
+
 # CLI-ONLY BUILD
 ifeq ($(CLI),1)
     DEFINES += -D_CLI
     SRC_FILES = $(filter-out $(GUI_FILES),$(ALL_SRC_FILES))
 else
 	LDFLAGS += $(LINKER_EXTRA_LIBS) $(LDFLAGS_GUI)
-	INC_DIR += $(LIBRARY_LIBSPNG)/include $(LIBRARY_IMGUI)/include $(LIBRARY_GLEW)/include $(LIBRARY_GLFW)/include $(LIBRARY_FREETYPE)/include $(LIBRARY_NATIVEFILEDIALOGEXTENDED)/src/include
+	INC_DIR += $(INC_DIR_GUI)
     SRC_FILES = $(ALL_SRC_FILES)
 	OBJ_FILES += $(IMGUI_OBJ_FILES) $(LIBSPNG_OBJ_FILES)
 endif
@@ -105,7 +119,7 @@ prep_headers: $(EMBEDDED_SHADERS_HEADER) $(EMBEDDED_LANG_HEADER) $(EMBEDDED_ICON
 compile_objs: $(OBJ_FILES)
 
 $(BINARY): | compile_objs
-	$(LD) -o $(BINARY) $(OBJ_FILES) $(LDFLAGS)
+	$(CXX) -o $(BINARY) $(OBJ_FILES) $(LDFLAGS)
 
 $(BUILD_DIR)/%.cpp.o: $(SRC_DIR)/%.cpp prep_headers
 	$(CXX) $(CXXFLAGS) $(DEFINES) -c $< -o $@
